@@ -1,12 +1,22 @@
-$(window).scroll(function() {
-    $(window).scrollTop() > 500 ? $("#rocket").addClass("show") : $("#rocket").removeClass("show");
-});
-$("#rocket").click(function() {
-    $("#rocket").addClass("launch");
-    $("html, body").animate({
-        scrollTop: 0
-    }, 500, function() {
-        $("#rocket").removeClass("show launch");
-    });
-    return false;
-});
+window.onload = function() {
+    var obn = document.getElementById('heart');
+    var timer = null;
+    var isTop = true;
+    window.onscroll = function() {
+        if (!isTop) {
+            clearInterval(timer);
+        }
+        isTop = false;
+    }
+    obn.onclick = function() {
+        timer = setInterval(function() {
+            var osTop = document.documentElement.scrollTop || document.body.scrollTop;
+            var ispeed = Math.floor(-osTop / 5);
+            document.documentElement.scrollTop = document.body.scrollTop = osTop + ispeed;
+            isTop = true;
+            if (osTop == 0) {
+                clearInterval(timer);
+            }
+        }, 30)
+    }
+}
